@@ -1,0 +1,9 @@
+{
+  "home": {
+    "title": "Next.js Starter",
+    "welcome": "Welcome to your new project!",
+    "description": "This is a starter template with Next.js, TypeScript, and shadcn/ui",
+    "button": "Click me",
+    "inputPlaceholder": "Type something..."
+  }
+}

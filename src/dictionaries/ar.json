@@ -1,0 +1,9 @@
+{
+  "home": {
+    "title": "مشروع Next.js",
+    "welcome": "مرحباً بك في مشروعك الجديد!",
+    "description": "هذا قالب بدء التشغيل مع Next.js و TypeScript و shadcn/ui",
+    "button": "انقر هنا",
+    "inputPlaceholder": "اكتب شيئاً..."
+  }
+}
