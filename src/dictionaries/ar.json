@@ -1,9 +1,20 @@
 {
   "home": {
-    "title": "مشروع Next.js",
-    "welcome": "مرحباً بك في مشروعك الجديد!",
-    "description": "هذا قالب بدء التشغيل مع Next.js و TypeScript و shadcn/ui",
-    "button": "انقر هنا",
-    "inputPlaceholder": "اكتب شيئاً..."
+    "title": "الرئيسية",
+    "welcome": "مرحباً",
+    "description": "ابدأ رحلتك هنا",
+    "inputPlaceholder": "أدخل النص",
+    "button": "ابدأ",
+    "contactUs": "اتصل بنا"
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "formTitle": "تواصل معنا",
+    "formDescription": "يسعدنا أن نسمع منك. أرسل لنا رسالة وسنرد في أقرب وقت ممكن.",
+    "namePlaceholder": "اسمك",
+    "emailPlaceholder": "بريدك الإلكتروني",
+    "messagePlaceholder": "رسالتك",
+    "submitButton": "إرسال الرسالة",
+    "backToHome": "العودة للرئيسية"
   }
 }

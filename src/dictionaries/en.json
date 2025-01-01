@@ -1,9 +1,20 @@
 {
   "home": {
-    "title": "Next.js Starter",
-    "welcome": "Welcome to your new project!",
-    "description": "This is a starter template with Next.js, TypeScript, and shadcn/ui",
-    "button": "Click me",
-    "inputPlaceholder": "Type something..."
+    "title": "Home",
+    "welcome": "Welcome",
+    "description": "Start your journey here",
+    "inputPlaceholder": "Enter your text",
+    "button": "Get Started",
+    "contactUs": "Contact Us"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "formTitle": "Get in Touch",
+    "formDescription": "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Your Email",
+    "messagePlaceholder": "Your Message",
+    "submitButton": "Send Message",
+    "backToHome": "Back to Home"
   }
 }
