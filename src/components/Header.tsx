@@ -1,8 +1,8 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
   GlobeAltIcon,
   ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
+import logo from "@/images/logo.png";
 
 interface HeaderProps {
   lang: string;
@@ -34,29 +35,40 @@ export function Header({ lang, t }: HeaderProps) {
     <header className="border-b">
       <div className="max-w-4xl mx-auto px-8 py-4">
         <div className="flex items-center justify-between">
-          <nav className="flex items-center gap-6">
-            {Object.entries(t.header).map(([key, value]) => {
-              const path = key === "home" ? `/${lang}` : `/${lang}/${key}`;
-
-              const isActive =
-                key === "home"
-                  ? currentPath === `/${lang}`
-                  : currentPath.includes(`/${key}`);
-
-              return (
-                <Link
-                  key={key}
-                  href={path}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    isActive ? "text-primary" : "text-muted-foreground"
-                  }`}
-                >
-                  {value}
-                </Link>
-              );
-            })}
-          </nav>
-
+          <div className="flex items-center gap-6">
+            {/* Logo with Link */}
+            <Link href={`/${lang}`} className="flex items-center">
+              <Image
+                src={logo}
+                alt="Logo"
+                width="0"
+                height="0"
+                priority
+                style={{ width: "70%", height: "auto" }}
+              />
+            </Link>
+            {/* Navigation */}
+            <nav className="flex items-center gap-6">
+              {Object.entries(t.header).map(([key, value]) => {
+                const path = key === "home" ? `/${lang}` : `/${lang}/${key}`;
+                const isActive =
+                  key === "home"
+                    ? currentPath === `/${lang}`
+                    : currentPath.includes(`/${key}`);
+                return (
+                  <Link
+                    key={key}
+                    href={path}
+                    className={`text-sm font-medium transition-colors hover:text-primary ${
+                      isActive ? "text-primary" : "text-muted-foreground"
+                    }`}
+                  >
+                    {value}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
           <div className="flex items-center gap-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -73,7 +85,6 @@ export function Header({ lang, t }: HeaderProps) {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
             <Button variant="ghost" size="icon">
               <ArrowRightOnRectangleIcon className="h-4 w-4" />
             </Button>
