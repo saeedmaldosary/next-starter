@@ -25,5 +25,10 @@
     "viewDetails": "View Details",
     "addToCart": "Add to Cart",
     "features": "Features"
+  },
+  "header": {
+    "home": "Home",
+    "products": "Products",
+    "contactUs": "Contact Us"
   }
 }

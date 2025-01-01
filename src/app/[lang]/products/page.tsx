@@ -1,4 +1,3 @@
-// app/[lang]/products/page.tsx
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -43,17 +42,6 @@ export default async function Products({
   return (
     <main className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        <div>
-          <Link href="/en/products">English</Link>
-          <span className="mx-2">|</span>
-          <Link href="/ar/products">العربيه</Link>
-        </div>
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">{t.products.title}</h1>
-          <Link href={`/${lang}`}>
-            <Button variant="outline">{t.products.backToHome}</Button>
-          </Link>
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <Card key={product.id}>

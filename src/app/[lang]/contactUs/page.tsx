@@ -7,7 +7,6 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { getDictionary } from "@/dictionaries";
 
 export default async function Contact({
@@ -21,17 +20,6 @@ export default async function Contact({
   return (
     <main className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        <div>
-          <Link href="/en/contact">English</Link>
-          <span className="mx-2">|</span>
-          <Link href="/ar/contact">العربيه</Link>
-        </div>
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">{t.contact.title}</h1>
-          <Link href={`/${lang}`}>
-            <Button variant="outline">{t.contact.backToHome}</Button>
-          </Link>
-        </div>
         <Card>
           <CardHeader>
             <CardTitle>{t.contact.formTitle}</CardTitle>

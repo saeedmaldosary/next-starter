@@ -1,4 +1,3 @@
-// app/[lang]/products/[id]/page.tsx
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,7 +6,6 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import Link from "next/link";
 import { getDictionary } from "@/dictionaries";
 import { notFound } from "next/navigation";
 
@@ -53,22 +51,6 @@ export default async function ProductDetail({
   return (
     <main className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        <div>
-          <Link href={`/en/products/${id}`}>English</Link>
-          <span className="mx-2">|</span>
-          <Link href={`/ar/products/${id}`}>العربيه</Link>
-        </div>
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">{product.title}</h1>
-          <div className="space-x-4">
-            <Link href={`/${lang}/products`}>
-              <Button variant="outline">{t.products.backToProducts}</Button>
-            </Link>
-            <Link href={`/${lang}`}>
-              <Button variant="outline">{t.products.backToHome}</Button>
-            </Link>
-          </div>
-        </div>
         <Card>
           <CardHeader>
             <CardTitle>{product.title}</CardTitle>

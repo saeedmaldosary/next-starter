@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Epilogue, Cairo } from "next/font/google";
 import Favicon from "/public/favicon.ico";
 import { notFound } from "next/navigation";
+import { Header } from "@/components/Header";
+import { getDictionary } from "@/dictionaries";
 import "../globals.css";
 
 const locales = ["en", "ar"];
@@ -38,6 +40,8 @@ export default async function RootLayout({ children, params }: Props) {
     notFound();
   }
 
+  const t = await getDictionary(lang);
+
   return (
     <html
       dir={lang === "ar" ? "rtl" : "ltr"}
@@ -51,7 +55,8 @@ export default async function RootLayout({ children, params }: Props) {
             : "font-epilogue text-left leading-normal"
         }`}
       >
-        {children}
+        <Header lang={lang} t={t} />
+        <main className="flex-1">{children}</main>
       </body>
     </html>
   );

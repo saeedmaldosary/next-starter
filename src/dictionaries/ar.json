@@ -25,5 +25,10 @@
     "viewDetails": "عرض التفاصيل",
     "addToCart": "أضف إلى السلة",
     "features": "المميزات"
+  },
+  "header": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "contactUs": "تواصل معنا"
   }
 }
