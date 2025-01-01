@@ -5,7 +5,8 @@
     "description": "ابدأ رحلتك هنا",
     "inputPlaceholder": "أدخل النص",
     "button": "ابدأ",
-    "contactUs": "اتصل بنا"
+    "contactUs": "اتصل بنا",
+    "viewProducts": "عرض المنتجات"
   },
   "contact": {
     "title": "اتصل بنا",
@@ -16,5 +17,13 @@
     "messagePlaceholder": "رسالتك",
     "submitButton": "إرسال الرسالة",
     "backToHome": "العودة للرئيسية"
+  },
+  "products": {
+    "title": "منتجاتنا",
+    "backToHome": "العودة للرئيسية",
+    "backToProducts": "العودة للمنتجات",
+    "viewDetails": "عرض التفاصيل",
+    "addToCart": "أضف إلى السلة",
+    "features": "المميزات"
   }
 }

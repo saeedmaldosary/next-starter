@@ -29,6 +29,9 @@ export default async function Home({ params }: { params: { lang: string } }) {
           <Link href={`/${lang}/contactUs`}>
             <Button variant="outline">{t.home.contactUs}</Button>
           </Link>
+          <Link href={`/${lang}/products`}>
+            <Button variant="outline">{t.home.viewProducts}</Button>
+          </Link>
         </div>
         <div className="flex gap-2">
           <HomeIcon className="h-6 w-6" />

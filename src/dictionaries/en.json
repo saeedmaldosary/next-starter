@@ -5,7 +5,8 @@
     "description": "Start your journey here",
     "inputPlaceholder": "Enter your text",
     "button": "Get Started",
-    "contactUs": "Contact Us"
+    "contactUs": "Contact Us",
+    "viewProducts": "View Products"
   },
   "contact": {
     "title": "Contact Us",
@@ -16,5 +17,13 @@
     "messagePlaceholder": "Your Message",
     "submitButton": "Send Message",
     "backToHome": "Back to Home"
+  },
+  "products": {
+    "title": "Our Products",
+    "backToHome": "Back to Home",
+    "backToProducts": "Back to Products",
+    "viewDetails": "View Details",
+    "addToCart": "Add to Cart",
+    "features": "Features"
   }
 }
