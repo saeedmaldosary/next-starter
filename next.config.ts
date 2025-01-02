@@ -1,5 +1,5 @@
 import createNextIntlPlugin from "next-intl/plugin";
-import { DEFAULT_LOCALE } from "@/app/config/locale";
+import { DEFAULT_LOCALE } from "@/i18n/config";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 

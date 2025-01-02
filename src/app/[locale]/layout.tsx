@@ -7,7 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 
 import "../globals.css";
-import { LOCALES } from "@/app/config/locale";
+import { LOCALES } from "@/i18n/config";
 
 const locales = LOCALES;
 

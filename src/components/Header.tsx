@@ -1,5 +1,5 @@
 "use client";
-import { Link, usePathname } from "@/navigation";
+import { Link, usePathname } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
