@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,11 +11,10 @@ import {
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { HomeIcon as HomeIconOutline } from "@heroicons/react/24/outline";
 import { Input } from "@/components/ui/input";
-import { getDictionary } from "@/dictionaries";
+import { useTranslations } from "next-intl";
 
-export default async function Home({ params }: { params: { lang: string } }) {
-  const { lang } = await params;
-  const t = await getDictionary(lang);
+export default function Home() {
+  const t = useTranslations("home");
 
   return (
     <main className="min-h-screen p-8">
@@ -24,12 +25,12 @@ export default async function Home({ params }: { params: { lang: string } }) {
         </div>
         <Card>
           <CardHeader>
-            <CardTitle>{t.home.welcome}</CardTitle>
-            <CardDescription>{t.home.description}</CardDescription>
+            <CardTitle>{t("welcome")}</CardTitle>
+            <CardDescription>{t("description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Input placeholder={t.home.inputPlaceholder} />
-            <Button>{t.home.button}</Button>
+            <Input placeholder={t("inputPlaceholder")} />
+            <Button>{t("button")}</Button>
           </CardContent>
         </Card>
       </div>

@@ -3,7 +3,9 @@ import { Epilogue, Cairo } from "next/font/google";
 import Favicon from "/public/favicon.ico";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
-import { getDictionary } from "@/dictionaries";
+import { NextIntlClientProvider } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+
 import "../globals.css";
 
 const locales = ["en", "ar"];
@@ -29,34 +31,41 @@ const cairo = Cairo({
 type Props = {
   children: React.ReactNode;
   params: Promise<{
-    lang: string;
+    locale: string;
   }>;
 };
 
 export default async function RootLayout({ children, params }: Props) {
-  const { lang } = await params;
+  // Await the params object
+  const { locale } = await params;
 
-  if (!locales.includes(lang)) {
+  // Validate locale
+  if (!locales.includes(locale)) {
     notFound();
   }
 
-  const t = await getDictionary(lang);
+  // Set the locale for next-intl
+  setRequestLocale(locale);
+
+  const messages = (await import(`../../../messages/${locale}.json`)).default;
 
   return (
     <html
-      dir={lang === "ar" ? "rtl" : "ltr"}
-      lang={lang}
+      dir={locale === "ar" ? "rtl" : "ltr"}
+      lang={locale}
       className={`h-full ${epilogue.variable} ${cairo.variable}`}
     >
       <body
         className={`flex min-h-screen flex-col ${
-          lang === "ar"
+          locale === "ar"
             ? "font-cairo text-right leading-loose"
             : "font-epilogue text-left leading-normal"
         }`}
       >
-        <Header lang={lang} t={t} />
-        <main className="flex-1">{children}</main>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Header />
+          <main className="flex-1">{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

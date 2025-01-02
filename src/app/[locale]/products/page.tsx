@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,7 +9,8 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import Link from "next/link";
-import { getDictionary } from "@/dictionaries";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 // Mock product data - in a real app, this would come from an API or database
 const products = [
@@ -31,13 +34,9 @@ const products = [
   }
 ];
 
-export default async function Products({
-  params
-}: {
-  params: { lang: string };
-}) {
-  const { lang } = await params;
-  const t = await getDictionary(lang);
+export default function Products() {
+  const t = useTranslations("products");
+  const locale = useLocale();
 
   return (
     <main className="min-h-screen p-8">
@@ -52,8 +51,8 @@ export default async function Products({
               <CardContent>
                 <div className="flex justify-between items-center">
                   <p className="text-lg font-semibold">${product.price}</p>
-                  <Link href={`/${lang}/products/${product.id}`}>
-                    <Button variant="outline">{t.products.viewDetails}</Button>
+                  <Link href={`products/${product.id}`}>
+                    <Button variant="outline">{t("viewDetails")}</Button>
                   </Link>
                 </div>
               </CardContent>

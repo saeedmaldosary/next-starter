@@ -1,6 +1,5 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
@@ -14,47 +13,35 @@ import {
   ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
 import logo from "@/images/logo.png";
+import { useTranslations } from "next-intl";
 
-interface HeaderProps {
-  lang: string;
-  t: {
-    header: Record<string, string>;
-  };
-  currentPath: string;
-}
-
-export function Header({ lang, t }: HeaderProps) {
+export function Header() {
+  const t = useTranslations("header");
+  const headerKeys = ["home", "products", "contactUs"];
   const currentPath = usePathname();
-
-  const getPathWithNewLang = (newLang: string) => {
-    const pathWithoutLang = currentPath.substring(3);
-    return `/${newLang}${pathWithoutLang}`;
-  };
 
   return (
     <header className="border-b">
       <div className="max-w-4xl mx-auto px-8 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            {/* Logo with Link */}
-            <Link href={`/${lang}`} className="flex items-center">
+            <Link href="/" className="flex items-center">
               <Image
                 src={logo}
                 alt="Logo"
                 width="0"
                 height="0"
                 priority
-                style={{ width: "70%", height: "auto" }}
+                style={{ width: "100%", height: "30px" }}
               />
             </Link>
-            {/* Navigation */}
             <nav className="flex items-center gap-6">
-              {Object.entries(t.header).map(([key, value]) => {
-                const path = key === "home" ? `/${lang}` : `/${lang}/${key}`;
+              {Object.entries(headerKeys).map(([key, value]) => {
+                const path = value === "home" ? "/" : `/${value}`;
                 const isActive =
-                  key === "home"
-                    ? currentPath === `/${lang}`
-                    : currentPath.includes(`/${key}`);
+                  value === "home"
+                    ? currentPath === `/`
+                    : currentPath.includes(`/${value}`);
                 return (
                   <Link
                     key={key}
@@ -63,7 +50,7 @@ export function Header({ lang, t }: HeaderProps) {
                       isActive ? "text-primary" : "text-muted-foreground"
                     }`}
                   >
-                    {value}
+                    {t(value)}
                   </Link>
                 );
               })}
@@ -78,10 +65,14 @@ export function Header({ lang, t }: HeaderProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
-                  <Link href={getPathWithNewLang("en")}>English</Link>
+                  <Link href={currentPath} locale="en">
+                    English
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={getPathWithNewLang("ar")}>العربية</Link>
+                  <Link href={currentPath} locale="ar">
+                    العربية
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

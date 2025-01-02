@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,10 +8,9 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import { getDictionary } from "@/dictionaries";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
-// Mock product data - in a real app, this would come from an API or database
 const products = {
   "1": {
     id: 1,
@@ -34,15 +35,10 @@ const products = {
   }
 };
 
-export default async function ProductDetail({
-  params
-}: {
-  params: { lang: string; id: string };
-}) {
-  const { lang, id } = await params;
-  const t = await getDictionary(lang);
-
-  const product = products[id as keyof typeof products];
+export default function ProductDetail() {
+  const params = useParams();
+  const t = useTranslations("products");
+  const product = products[params.id as keyof typeof products];
 
   if (!product) {
     notFound();
@@ -59,10 +55,10 @@ export default async function ProductDetail({
           <CardContent className="space-y-6">
             <div className="flex justify-between items-center">
               <p className="text-2xl font-bold">${product.price}</p>
-              <Button>{t.products.addToCart}</Button>
+              <Button>{t("addToCart")}</Button>
             </div>
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold">{t.products.features}</h3>
+              <h3 className="text-lg font-semibold">{t("features")}</h3>
               <ul className="list-disc pl-6 space-y-2">
                 {product.features.map((feature, index) => (
                   <li key={index}>{feature}</li>
