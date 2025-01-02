@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import { Link } from "@/lib/navigation";
+// import { env } from "@/app/env";
 
 export default function LandingPage() {
   const t = useTranslations("landing");
