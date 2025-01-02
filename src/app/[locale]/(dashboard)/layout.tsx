@@ -6,7 +6,7 @@ import { Header } from "@/components/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 
-import "../globals.css";
+import "../../globals.css";
 import { LOCALES } from "@/i18n/config";
 
 const locales = LOCALES;
@@ -48,7 +48,7 @@ export default async function RootLayout({ children, params }: Props) {
   // Set the locale for next-intl
   setRequestLocale(locale);
 
-  const messages = (await import(`../../../messages/${locale}.json`)).default;
+  const messages = (await import(`@/messages/${locale}.json`)).default;
 
   return (
     <html

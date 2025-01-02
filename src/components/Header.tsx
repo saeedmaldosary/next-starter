@@ -34,10 +34,12 @@ export function Header() {
             </Link>
             <nav className="flex items-center gap-6">
               {Object.entries(headerKeys).map(([key, value]) => {
-                const path = value === "home" ? "/" : `/${value}`;
+                const layoutPrefix = "/dashboard";
+                const path =
+                  value === "home" ? layoutPrefix : `${layoutPrefix}/${value}`;
                 const isActive =
                   value === "home"
-                    ? currentPath === `/`
+                    ? currentPath === layoutPrefix
                     : currentPath.includes(`/${value}`);
                 return (
                   <Link

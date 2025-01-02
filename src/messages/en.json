@@ -1,4 +1,15 @@
 {
+  "landing": {
+    "login": "Log in",
+    "signup": "Sign up",
+    "hero": {
+      "title": "Welcome to Your App",
+      "subtitle": "A powerful solution for your needs",
+      "cta": "Get Started",
+      "secondary": "Learn More",
+      "imageCaption": "Product preview"
+    }
+  },
   "home": {
     "title": "Home",
     "welcome": "Welcome",
