@@ -1,6 +1,6 @@
-// src/config/locale.ts
 export const LOCALES = ["en", "ar"] as const;
 export type Locale = (typeof LOCALES)[number];
+export const LOCALE_PREFIX = "always" as const;
 
 export const DEFAULT_LOCALE: Locale = "en";
 

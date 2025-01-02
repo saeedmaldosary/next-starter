@@ -1,12 +1,12 @@
 import type { NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
-import { LOCALES, DEFAULT_LOCALE } from "./config/locale";
+import { LOCALES, DEFAULT_LOCALE, LOCALE_PREFIX } from "@/app/config/locale";
 
 // Create the middleware
 const intlMiddleware = createMiddleware({
   locales: LOCALES,
   defaultLocale: DEFAULT_LOCALE,
-  localePrefix: "always"
+  localePrefix: LOCALE_PREFIX
 });
 
 // Main middleware handler

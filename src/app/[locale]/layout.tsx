@@ -7,8 +7,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 
 import "../globals.css";
+import { LOCALES } from "@/app/config/locale";
 
-const locales = ["en", "ar"];
+const locales = LOCALES;
 
 export const metadata: Metadata = {
   title: "Next Starter",
