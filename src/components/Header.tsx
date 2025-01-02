@@ -3,22 +3,19 @@ import { Link, usePathname } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import {
   GlobeAltIcon,
   ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
 import logo from "@/images/logo.png";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 export function Header() {
   const t = useTranslations("header");
   const headerKeys = ["home", "products", "contactUs"];
   const currentPath = usePathname();
+  const locale = useLocale();
+  const oppositeLocale = locale === "en" ? "ar" : "en";
 
   return (
     <header className="border-b">
@@ -57,25 +54,11 @@ export function Header() {
             </nav>
           </div>
           <div className="flex items-center gap-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <GlobeAltIcon className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
-                  <Link href={currentPath} locale="en">
-                    English
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href={currentPath} locale="ar">
-                    العربية
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link href={currentPath} locale={oppositeLocale}>
+              <Button variant="ghost" size="icon">
+                <GlobeAltIcon className="h-4 w-4" />
+              </Button>
+            </Link>
             <Button variant="ghost" size="icon">
               <ArrowRightOnRectangleIcon className="h-4 w-4" />
             </Button>
