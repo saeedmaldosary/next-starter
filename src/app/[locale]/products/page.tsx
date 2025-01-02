@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
 
 // Mock product data - in a real app, this would come from an API or database
 const products = [
@@ -36,7 +35,6 @@ const products = [
 
 export default function Products() {
   const t = useTranslations("products");
-  const locale = useLocale();
 
   return (
     <main className="min-h-screen p-8">
