@@ -27,7 +27,8 @@
     "emailPlaceholder": "Your Email",
     "messagePlaceholder": "Your Message",
     "submitButton": "Send Message",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "categoryPlaceholder": "Category"
   },
   "products": {
     "title": "Our Products",

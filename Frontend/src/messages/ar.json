@@ -27,7 +27,8 @@
     "emailPlaceholder": "بريدك الإلكتروني",
     "messagePlaceholder": "رسالتك",
     "submitButton": "إرسال الرسالة",
-    "backToHome": "العودة للرئيسية"
+    "backToHome": "العودة للرئيسية",
+    "categoryPlaceholder": "الفئه"
   },
   "products": {
     "title": "منتجاتنا",
