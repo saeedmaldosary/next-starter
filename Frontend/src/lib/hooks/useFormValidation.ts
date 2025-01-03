@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { validationRules } from "@/lib/validations/form";
 
 export interface ValidationError {
@@ -23,6 +24,7 @@ export const useFormValidation = ({
 }: FormValidationConfig) => {
   const [formData, setFormData] = useState(initialValues);
   const [errors, setErrors] = useState<ValidationError[]>([]);
+  const t = useTranslations("validation");
 
   const validateField = (field: string, value: string): string[] => {
     const fieldRules = rules[field];
@@ -31,11 +33,13 @@ export const useFormValidation = ({
     if (!fieldRules) return fieldErrors;
 
     if (fieldRules.required && !value) {
-      fieldErrors.push(fieldRules.messages.required);
+      // Translate the required message using the translation key
+      fieldErrors.push(t(fieldRules.messages.required));
     }
 
     if (value && fieldRules.pattern && !fieldRules.pattern.test(value)) {
-      fieldErrors.push(fieldRules.messages.pattern);
+      // Translate the pattern message using the translation key
+      fieldErrors.push(t(fieldRules.messages.pattern));
     }
 
     return fieldErrors;

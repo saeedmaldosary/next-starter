@@ -48,5 +48,29 @@
     "home": "Home",
     "products": "Products",
     "contactUs": "Contact Us"
+  },
+  "validation": {
+    "name": {
+      "required": "Name is required",
+      "pattern": "Name must be 2-50 characters and contain only letters and spaces"
+    },
+    "email": {
+      "required": "Email is required",
+      "pattern": "Please enter a valid email address"
+    },
+    "message": {
+      "required": "Message is required",
+      "pattern": "Message must be between 10 and 500 characters"
+    },
+    "phone": {
+      "pattern": "Please enter a valid phone number"
+    },
+    "password": {
+      "required": "Password is required",
+      "pattern": "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character"
+    },
+    "category": {
+      "required": "Please select a category"
+    }
   }
 }
