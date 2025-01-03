@@ -28,7 +28,13 @@
     "messagePlaceholder": "رسالتك",
     "submitButton": "إرسال الرسالة",
     "backToHome": "العودة للرئيسية",
-    "categoryPlaceholder": "الفئه"
+    "categoryPlaceholder": "الفئه",
+    "categories": {
+      "general": "سؤال عام",
+      "support": "مساعده تقنيه",
+      "feedback": "رأي",
+      "other": "اخرى"
+    }
   },
   "products": {
     "title": "منتجاتنا",

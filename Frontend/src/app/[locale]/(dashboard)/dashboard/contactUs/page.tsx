@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,59 +18,45 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { useTranslations } from "next-intl";
 import { validationRules } from "@/lib/validations";
-import { useFormValidation } from "@/lib/hooks/use-form-validation";
+import { useFormValidation, FormData } from "@/lib/hooks/use-form-validation";
 
-type FormData = {
-  name: string;
-  email: string;
-  message: string;
-  category: string;
-};
+interface CategoryOption {
+  value: string;
+  label: string;
+}
 
-const categoryOptions = [
+const categoryOptions: CategoryOption[] = [
   { value: "general", label: "General Inquiry" },
   { value: "support", label: "Technical Support" },
   { value: "feedback", label: "Feedback" },
   { value: "other", label: "Other" }
 ];
 
+const initialValues: FormData = {
+  name: "",
+  email: "",
+  message: "",
+  category: ""
+};
+
 export default function Contact() {
   const t = useTranslations("contact");
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    message: "",
-    category: ""
-  });
 
-  const { validateForm, getFieldError } = useFormValidation(validationRules);
+  const { formData, handleFieldChange, handleSubmit, getFieldError } =
+    useFormValidation({
+      rules: validationRules,
+      initialValues
+    });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, category: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (validateForm(formData)) {
-      try {
-        // Here you would typically send the data to your API
-        console.log("Form submitted successfully:", formData);
-
-        // Clear form after successful submission
-        setFormData({ name: "", email: "", message: "", category: "" });
-      } catch (error) {
-        console.error("Error submitting form:", error);
-      }
+  const onSubmit = async (data: FormData) => {
+    try {
+      // Here you would typically send the data to your API
+      console.log("Form submitted successfully:", data);
+      // You could also show a success message to the user
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // Handle error (e.g., show error message to user)
     }
   };
 
@@ -83,12 +69,15 @@ export default function Contact() {
             <CardDescription>{t("formDescription")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={(e) => handleSubmit(onSubmit, e)}
+              className="space-y-4"
+            >
               <div className="space-y-2">
                 <Input
                   name="name"
                   value={formData.name}
-                  onChange={handleChange}
+                  onChange={handleFieldChange}
                   placeholder={t("namePlaceholder")}
                   className={getFieldError("name") ? "border-red-500" : ""}
                 />
@@ -104,7 +93,7 @@ export default function Contact() {
                   name="email"
                   type="email"
                   value={formData.email}
-                  onChange={handleChange}
+                  onChange={handleFieldChange}
                   placeholder={t("emailPlaceholder")}
                   className={getFieldError("email") ? "border-red-500" : ""}
                 />
@@ -118,7 +107,9 @@ export default function Contact() {
               <div className="space-y-2">
                 <Select
                   name="category"
-                  onValueChange={handleSelectChange}
+                  onValueChange={(value) =>
+                    handleFieldChange("category", value)
+                  }
                   value={formData.category}
                 >
                   <SelectTrigger
@@ -131,7 +122,7 @@ export default function Contact() {
                   <SelectContent>
                     {categoryOptions.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
-                        {option.label}
+                        {t(`categories.${option.value}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -147,7 +138,7 @@ export default function Contact() {
                 <Textarea
                   name="message"
                   value={formData.message}
-                  onChange={handleChange}
+                  onChange={handleFieldChange}
                   placeholder={t("messagePlaceholder")}
                   className={getFieldError("message") ? "border-red-500" : ""}
                   rows={4}

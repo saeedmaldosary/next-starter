@@ -6,7 +6,22 @@ export interface ValidationError {
   message: string;
 }
 
-export const useFormValidation = (rules: typeof validationRules) => {
+// Define a type for form field values
+export type FieldValue = string | number | boolean;
+
+// Define a type for form data
+export type FormData = Record<string, FieldValue>;
+
+export interface FormValidationConfig {
+  rules: typeof validationRules;
+  initialValues: FormData;
+}
+
+export const useFormValidation = ({
+  rules,
+  initialValues
+}: FormValidationConfig) => {
+  const [formData, setFormData] = useState(initialValues);
   const [errors, setErrors] = useState<ValidationError[]>([]);
 
   const validateField = (field: string, value: string): string[] => {
@@ -26,11 +41,11 @@ export const useFormValidation = (rules: typeof validationRules) => {
     return fieldErrors;
   };
 
-  const validateForm = (data: Record<string, string>): boolean => {
+  const validateForm = (): boolean => {
     const newErrors: ValidationError[] = [];
 
-    Object.entries(data).forEach(([field, value]) => {
-      const fieldErrors = validateField(field, value);
+    Object.entries(formData).forEach(([field, value]) => {
+      const fieldErrors = validateField(field, String(value));
       fieldErrors.forEach((message) => {
         newErrors.push({ field, message });
       });
@@ -40,15 +55,57 @@ export const useFormValidation = (rules: typeof validationRules) => {
     return newErrors.length === 0;
   };
 
+  const handleFieldChange = (
+    fieldOrEvent: string | React.ChangeEvent<HTMLElement>,
+    directValue?: FieldValue
+  ) => {
+    if (typeof fieldOrEvent === "string") {
+      // Handle direct value (e.g., from Select)
+      setFormData((prev) => ({ ...prev, [fieldOrEvent]: directValue }));
+    } else {
+      // Handle event from Input/Textarea
+      const target = fieldOrEvent.target as
+        | HTMLInputElement
+        | HTMLTextAreaElement;
+      setFormData((prev) => ({ ...prev, [target.name]: target.value }));
+    }
+  };
+
+  const handleSubmit = async (
+    onSubmit: (data: FormData) => Promise<void> | void,
+    e?: React.FormEvent
+  ) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    if (validateForm()) {
+      try {
+        await onSubmit(formData);
+        reset();
+      } catch (error) {
+        console.error("Form submission error:", error);
+      }
+    }
+  };
+
   const getFieldError = (fieldName: string): string | undefined => {
     return errors.find((error) => error.field === fieldName)?.message;
   };
 
+  const reset = () => {
+    setFormData(initialValues);
+    setErrors([]);
+  };
+
   return {
+    formData,
     errors,
-    validateField,
-    validateForm,
+    handleFieldChange,
+    handleSubmit,
     getFieldError,
-    clearErrors: () => setErrors([])
+    reset,
+    validateField,
+    validateForm
   };
 };
