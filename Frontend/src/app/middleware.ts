@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
-import { LOCALES, DEFAULT_LOCALE, LOCALE_PREFIX } from "@/i18n/config";
+import { LOCALES, DEFAULT_LOCALE, LOCALE_PREFIX } from "@/lib/i18n/config";
 
 // Create the middleware
 const intlMiddleware = createMiddleware({

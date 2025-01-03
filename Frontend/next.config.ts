@@ -1,7 +1,7 @@
 import createNextIntlPlugin from "next-intl/plugin";
-import { DEFAULT_LOCALE } from "@/i18n/config";
+import { DEFAULT_LOCALE } from "@/lib/i18n/config";
 
-const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+const withNextIntl = createNextIntlPlugin("./src/lib/i18n/request.ts");
 
 const nextConfig = {
   output: "standalone" as const,

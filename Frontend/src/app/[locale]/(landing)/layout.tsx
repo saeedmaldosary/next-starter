@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import "../../globals.css";
-import { LOCALES } from "@/i18n/config";
+import { LOCALES } from "@/lib/i18n/config";
 
 const epilogue = Epilogue({
   subsets: ["latin"],
@@ -23,7 +23,7 @@ export default async function LandingLayout({ children, params }) {
   if (!LOCALES.includes(locale)) notFound();
 
   setRequestLocale(locale);
-  const messages = (await import(`@/messages/${locale}.json`)).default;
+  const messages = (await import(`@/lib/i18n/messages/${locale}.json`)).default;
 
   return (
     <html

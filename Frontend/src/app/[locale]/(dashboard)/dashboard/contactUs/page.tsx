@@ -19,7 +19,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { validationRules } from "@/lib/validations";
-import { useFormValidation, FormData } from "@/lib/hooks/use-form-validation";
+import { useFormValidation, FormData } from "@/lib/hooks/useFormValidation";
 
 interface CategoryOption {
   value: string;
