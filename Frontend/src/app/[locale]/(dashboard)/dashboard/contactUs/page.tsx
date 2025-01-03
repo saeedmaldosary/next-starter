@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { validationRules } from "@/lib/validations";
 import { useFormValidation, FormData } from "@/lib/hooks/useFormValidation";
+import { FormField } from "@/components/FormField"; // Make sure to adjust this import path
 
 interface CategoryOption {
   value: string;
@@ -73,38 +74,30 @@ export default function Contact() {
               onSubmit={(e) => handleSubmit(onSubmit, e)}
               className="space-y-4"
             >
-              <div className="space-y-2">
+              <FormField name="name" getFieldError={getFieldError}>
                 <Input
                   name="name"
                   value={formData.name}
                   onChange={handleFieldChange}
                   placeholder={t("namePlaceholder")}
-                  className={getFieldError("name") ? "border-red-500" : ""}
                 />
-                {getFieldError("name") && (
-                  <p className="text-sm text-red-500">
-                    {getFieldError("name")}
-                  </p>
-                )}
-              </div>
+              </FormField>
 
-              <div className="space-y-2">
+              <FormField name="email" getFieldError={getFieldError}>
                 <Input
                   name="email"
                   type="email"
                   value={formData.email}
                   onChange={handleFieldChange}
                   placeholder={t("emailPlaceholder")}
-                  className={getFieldError("email") ? "border-red-500" : ""}
                 />
-                {getFieldError("email") && (
-                  <p className="text-sm text-red-500">
-                    {getFieldError("email")}
-                  </p>
-                )}
-              </div>
+              </FormField>
 
-              <div className="space-y-2">
+              <FormField
+                name="category"
+                getFieldError={getFieldError}
+                errorStyleTarget="SelectTrigger"
+              >
                 <Select
                   name="category"
                   onValueChange={(value) =>
@@ -112,11 +105,7 @@ export default function Contact() {
                   }
                   value={formData.category}
                 >
-                  <SelectTrigger
-                    className={
-                      getFieldError("category") ? "border-red-500" : ""
-                    }
-                  >
+                  <SelectTrigger>
                     <SelectValue placeholder={t("categoryPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
@@ -127,28 +116,17 @@ export default function Contact() {
                     ))}
                   </SelectContent>
                 </Select>
-                {getFieldError("category") && (
-                  <p className="text-sm text-red-500">
-                    {getFieldError("category")}
-                  </p>
-                )}
-              </div>
+              </FormField>
 
-              <div className="space-y-2">
+              <FormField name="message" getFieldError={getFieldError}>
                 <Textarea
                   name="message"
                   value={formData.message}
                   onChange={handleFieldChange}
                   placeholder={t("messagePlaceholder")}
-                  className={getFieldError("message") ? "border-red-500" : ""}
                   rows={4}
                 />
-                {getFieldError("message") && (
-                  <p className="text-sm text-red-500">
-                    {getFieldError("message")}
-                  </p>
-                )}
-              </div>
+              </FormField>
 
               <Button type="submit" className="w-full">
                 {t("submitButton")}
