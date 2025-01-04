@@ -46,7 +46,24 @@
     "columnTitle": "العنوان",
     "columnDescription": "الوصف",
     "columnPrice": "السعر",
-    "columnActions": ""
+    "columnActions": "",
+    "columnStatus": "الحاله",
+    "addProduct": "اضف منتج",
+    "delete": "حذف",
+    "noProducts": "لايوجد منتجات",
+    "noProductsDescription": "أبدا باضافة منتجك الاول",
+    "tryAgain": "حاول مره اخرى",
+    "error": "خطأ",
+    "api": {
+      "errors": {
+        "fetchProducts": "فشل في جلب المنتجات",
+        "fetchProduct": "فشل في جلب تفاصيل المنتج",
+        "createProduct": "فشل في إنشاء المنتج",
+        "updateProduct": "فشل في تحديث المنتج",
+        "deleteProduct": "فشل في حذف المنتج",
+        "fetchStatus": "فشل في جلب خيارات الحالة"
+      }
+    }
   },
   "header": {
     "home": "الرئيسية",

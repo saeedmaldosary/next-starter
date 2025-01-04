@@ -1,9 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
+// CORS configuration
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 let products = [];
@@ -101,7 +110,7 @@ app.put("/api/products/:id", (req, res) => {
     return res.status(404).json({ error: "Product not found" });
   }
 
-  if (status) {
+  if (status !== undefined) {
     const validStatus = STATUS_OPTIONS.find((s) => s.id === status);
     if (!validStatus) {
       return res.status(400).json({ error: "Invalid status id" });

@@ -46,7 +46,24 @@
     "columnTitle": "Title",
     "columnDescription": "Description",
     "columnPrice": "Price",
-    "columnActions": ""
+    "columnActions": "",
+    "columnStatus": "Status",
+    "addProduct": "Add product",
+    "delete": "Delete",
+    "noProducts": "No products",
+    "noProductsDescription": "Get started by creating your first product",
+    "tryAgain": "Try Again",
+    "error": "Error",
+    "api": {
+      "errors": {
+        "fetchProducts": "Failed to fetch products",
+        "fetchProduct": "Failed to fetch product details",
+        "createProduct": "Failed to create product",
+        "updateProduct": "Failed to update product",
+        "deleteProduct": "Failed to delete product",
+        "fetchStatus": "Failed to fetch status options"
+      }
+    }
   },
   "header": {
     "home": "Home",

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { Toaster } from "@/components/ui/toaster";
 
 import "../../globals.css";
 import { LOCALES } from "@/lib/i18n/config";
@@ -66,6 +67,7 @@ export default async function RootLayout({ children, params }: Props) {
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
           <main className="flex-1">{children}</main>
+          <Toaster />
         </NextIntlClientProvider>
       </body>
     </html>
