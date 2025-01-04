@@ -42,7 +42,11 @@
     "backToProducts": "العودة للمنتجات",
     "viewDetails": "عرض التفاصيل",
     "addToCart": "أضف إلى السلة",
-    "features": "المميزات"
+    "features": "المميزات",
+    "columnTitle": "العنوان",
+    "columnDescription": "الوصف",
+    "columnPrice": "السعر",
+    "columnActions": ""
   },
   "header": {
     "home": "الرئيسية",

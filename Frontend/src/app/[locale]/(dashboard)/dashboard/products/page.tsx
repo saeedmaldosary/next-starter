@@ -2,12 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
@@ -33,30 +34,48 @@ const products = [
   }
 ];
 
+const headers = [
+  { key: "title", translationKey: "columnTitle" },
+  { key: "description", translationKey: "columnDescription" },
+  { key: "price", translationKey: "columnPrice", className: "text-right" },
+  { key: "actions", translationKey: "columnActions", className: "w-24" }
+];
+
 export default function Products() {
   const t = useTranslations("products");
 
   return (
     <main className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <Card key={product.id}>
-              <CardHeader>
-                <CardTitle>{product.title}</CardTitle>
-                <CardDescription>{product.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-between items-center">
-                  <p className="text-lg font-semibold">${product.price}</p>
+      <div className="max-w-4xl mx-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {headers.map((header) => (
+                <TableHead key={header.key} className={header.className}>
+                  {t(header.translationKey)}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {products.map((product) => (
+              <TableRow key={product.id}>
+                <TableCell className="font-medium">{product.title}</TableCell>
+                <TableCell>{product.description}</TableCell>
+                <TableCell className="text-right">
+                  ${product.price.toFixed(2)}
+                </TableCell>
+                <TableCell>
                   <Link href={`products/${product.id}`}>
-                    <Button variant="outline">{t("viewDetails")}</Button>
+                    <Button variant="outline" size="sm">
+                      {t("viewDetails")}
+                    </Button>
                   </Link>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </main>
   );

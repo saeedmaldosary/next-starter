@@ -42,7 +42,11 @@
     "backToProducts": "Back to Products",
     "viewDetails": "View Details",
     "addToCart": "Add to Cart",
-    "features": "Features"
+    "features": "Features",
+    "columnTitle": "Title",
+    "columnDescription": "Description",
+    "columnPrice": "Price",
+    "columnActions": ""
   },
   "header": {
     "home": "Home",
