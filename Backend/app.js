@@ -18,7 +18,6 @@ const getAllowedOrigins = () => {
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = getAllowedOrigins();
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -98,7 +97,7 @@ app.post("/api/products", (req, res) => {
     description,
     price,
     features,
-    status: validStatus.name
+    status: validStatus.id
   };
 
   products.push(product);
@@ -132,7 +131,7 @@ app.put("/api/products/:id", (req, res) => {
     if (!validStatus) {
       return res.status(400).json({ error: "Invalid status id" });
     }
-    products[productIndex].status = validStatus.name;
+    products[productIndex].status = validStatus.id;
   }
 
   products[productIndex] = {

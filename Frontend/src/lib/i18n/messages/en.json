@@ -37,6 +37,16 @@
     }
   },
   "products": {
+    "createDialog": {
+      "title": "Create New Product",
+      "description": "Fill in the details below to create a new product."
+    },
+    "cancel": "Cancel",
+    "create": "Create Product",
+    "titlePlaceholder": "Enter product title",
+    "descriptionPlaceholder": "Enter product description",
+    "pricePlaceholder": "Enter price",
+    "statusPlaceholder": "Select status",
     "title": "Our Products",
     "backToHome": "Back to Home",
     "backToProducts": "Back to Products",
@@ -50,6 +60,10 @@
     "columnStatus": "Status",
     "addProduct": "Add product",
     "delete": "Delete",
+    "status": {
+      "0": "Available",
+      "1": "Not Available"
+    },
     "noProducts": "No products",
     "noProductsDescription": "Get started by creating your first product",
     "tryAgain": "Try Again",
@@ -63,7 +77,25 @@
         "deleteProduct": "Failed to delete product",
         "fetchStatus": "Failed to fetch status options"
       }
-    }
+    },
+    "editDialog": {
+      "title": "Edit Product",
+      "description": "Update the product details below."
+    },
+    "editProduct": "Edit",
+    "update": "Update Product",
+    "updating": "Updating...",
+    "editSuccess": {
+      "title": "Success",
+      "description": "Product updated successfully"
+    },
+    "editError": "Failed to update product. Please try again.",
+    "creating": "Creating...",
+    "createSuccess": {
+      "title": "Success",
+      "description": "Product created successfully"
+    },
+    "createError": "Failed to create product. Please try again."
   },
   "header": {
     "home": "Home",
@@ -89,6 +121,11 @@
     "password": {
       "required": "Password is required",
       "pattern": "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character"
+    },
+    "price": {
+      "required": "Price is required",
+      "min": "Price must be greater than 0",
+      "pattern": "Price must be a valid number with up to 2 decimal places"
     },
     "category": {
       "required": "Please select a category"

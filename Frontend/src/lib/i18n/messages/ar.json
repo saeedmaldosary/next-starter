@@ -37,6 +37,16 @@
     }
   },
   "products": {
+    "createDialog": {
+      "title": "إنشاء منتج جديد",
+      "description": "املأ التفاصيل أدناه لإنشاء منتج جديد"
+    },
+    "cancel": "الغاء",
+    "create": "انشاء منتج ",
+    "titlePlaceholder": "أدخل عنوان المنتج",
+    "descriptionPlaceholder": "أدخل وصف المنتج",
+    "pricePlaceholder": "ادخل السعر",
+    "statusPlaceholder": "اختر الحاله",
     "title": "منتجاتنا",
     "backToHome": "العودة للرئيسية",
     "backToProducts": "العودة للمنتجات",
@@ -50,6 +60,10 @@
     "columnStatus": "الحاله",
     "addProduct": "اضف منتج",
     "delete": "حذف",
+    "status": {
+      "0": "متاح",
+      "1": "غير متاح"
+    },
     "noProducts": "لايوجد منتجات",
     "noProductsDescription": "أبدا باضافة منتجك الاول",
     "tryAgain": "حاول مره اخرى",
@@ -63,7 +77,29 @@
         "deleteProduct": "فشل في حذف المنتج",
         "fetchStatus": "فشل في جلب خيارات الحالة"
       }
-    }
+    },
+    "createDialog": {
+      "title": "إنشاء منتج جديد",
+      "description": "املأ التفاصيل أدناه لإنشاء منتج جديد"
+    },
+    "editDialog": {
+      "title": "تعديل المنتج",
+      "description": "تحديث تفاصيل المنتج أدناه"
+    },
+    "editProduct": "تعديل",
+    "update": "تحديث المنتج",
+    "updating": "جارٍ التحديث...",
+    "editSuccess": {
+      "title": "تم بنجاح",
+      "description": "تم تحديث المنتج بنجاح"
+    },
+    "editError": "فشل تحديث المنتج. يرجى المحاولة مرة أخرى",
+    "creating": "جارٍ الإنشاء...",
+    "createSuccess": {
+      "title": "تم بنجاح",
+      "description": "تم إنشاء المنتج بنجاح"
+    },
+    "createError": "فشل إنشاء المنتج. يرجى المحاولة مرة أخرى"
   },
   "header": {
     "home": "الرئيسية",
@@ -89,6 +125,11 @@
     "password": {
       "required": "كلمة المرور مطلوبة",
       "pattern": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، وحرف كبير، وحرف صغير، ورقم، وحرف خاص"
+    },
+    "price": {
+      "required": "السعر مطلوب",
+      "min": "يجب أن يكون السعر أكبر من 0",
+      "pattern": "يجب أن يكون السعر رقمًا صحيحًا مع ما يصل إلى رقمين عشريين"
     },
     "category": {
       "required": "يرجى اختيار فئة"

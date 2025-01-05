@@ -1,24 +1,29 @@
 // types/products.ts
+export enum ProductStatus {
+  UNAVAILABLE = 0,
+  AVAILABLE = 1
+}
+
 export interface Product {
   id: string;
   title: string;
   description: string;
   price: number;
-  status: "available" | "unavailable";
+  status: ProductStatus;
 }
 
 export interface ProductCreate {
   title: string;
   description: string;
   price: number;
-  status: "available" | "unavailable";
+  status: ProductStatus;
 }
 
 export interface ProductUpdate {
   title?: string;
   description?: string;
   price?: number;
-  status?: "available" | "unavailable";
+  status?: ProductStatus;
 }
 
 export interface PaginatedResponse<T> {

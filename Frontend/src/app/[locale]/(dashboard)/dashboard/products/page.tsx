@@ -10,7 +10,6 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
   Pagination,
@@ -20,10 +19,11 @@ import {
   PaginationNext,
   PaginationPrevious
 } from "@/components/ui/pagination";
-import { Package, Plus } from "lucide-react";
+import { Package } from "lucide-react";
 import { productService } from "@/services/products";
 import { Product } from "@/types/products";
 import { toast } from "@/hooks/use-toast";
+import ProductDialog from "@/components/ProductDialog";
 
 const useProducts = (page = 0, size = 2) => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -109,12 +109,10 @@ export default function Products() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <Link href="/products/new">
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              {t("addProduct")}
-            </Button>
-          </Link>
+          <ProductDialog
+            mode="create"
+            onSuccess={() => fetchProducts(currentPage)}
+          />
         </div>
 
         {error ? (
@@ -155,21 +153,21 @@ export default function Products() {
                     <TableCell>
                       <span
                         className={`px-2 py-1 whitespace-nowrap rounded-full text-sm ${
-                          product.status === "available"
+                          product.status === 0
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
                         }`}
                       >
-                        {product.status}
+                        {t(`status.${product.status}`)}
                       </span>
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
-                        <Link href={`/products/${product.id}`}>
-                          <Button variant="outline" size="sm">
-                            {t("viewDetails")}
-                          </Button>
-                        </Link>
+                        <ProductDialog
+                          mode="edit"
+                          product={product}
+                          onSuccess={() => fetchProducts(currentPage)}
+                        />
                         <Button
                           variant="destructive"
                           size="sm"
