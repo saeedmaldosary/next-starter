@@ -5,6 +5,15 @@ import { setRequestLocale } from "next-intl/server";
 import "../../globals.css";
 import { LOCALES } from "@/lib/i18n/config";
 
+type Locale = "en" | "ar";
+
+type LayoutProps = {
+  children: React.ReactNode;
+  params: Promise<{
+    locale: Locale;
+  }>;
+};
+
 const epilogue = Epilogue({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -17,7 +26,7 @@ const cairo = Cairo({
   variable: "--font-cairo"
 });
 
-export default async function LandingLayout({ children, params }) {
+export default async function LandingLayout({ children, params }: LayoutProps) {
   const { locale } = await params;
 
   if (!LOCALES.includes(locale)) notFound();

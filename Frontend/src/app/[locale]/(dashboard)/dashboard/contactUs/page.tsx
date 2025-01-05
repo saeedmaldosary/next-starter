@@ -51,6 +51,8 @@ const categoryOptions: CategoryOption[] = [
 export default function Contact() {
   const t = useTranslations("contact");
   const tValidation = useTranslations("validation");
+  const getTranslation = (key: string): string => tValidation(key);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Initialize form with react-hook-form
@@ -92,7 +94,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="name"
-                  rules={getValidationRules(tValidation).name}
+                  rules={getValidationRules(getTranslation).name}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -106,7 +108,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="email"
-                  rules={getValidationRules(tValidation).email}
+                  rules={getValidationRules(getTranslation).email}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -124,7 +126,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="category"
-                  rules={getValidationRules(tValidation).category}
+                  rules={getValidationRules(getTranslation).category}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -157,7 +159,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="message"
-                  rules={getValidationRules(tValidation).message}
+                  rules={getValidationRules(getTranslation).message}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>

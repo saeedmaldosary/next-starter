@@ -4,8 +4,8 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ButtonProps, buttonVariants } from "@/components/ui/button";
 
-// Custom hook to detect RTL
-const useRtl = (ref: React.RefObject<HTMLElement>) => {
+// Custom hook to detect RTL - Updated to be more flexible with element types
+const useRtl = <T extends HTMLElement>(ref: React.RefObject<T | null>) => {
   const [isRtl, setIsRtl] = React.useState(false);
 
   React.useEffect(() => {
@@ -29,7 +29,7 @@ const useRtl = (ref: React.RefObject<HTMLElement>) => {
       observer.observe(element, { attributes: true });
       return () => observer.disconnect();
     }
-  }, [ref]); // Added ref to the dependency array
+  }, [ref]);
 
   return isRtl;
 };
@@ -104,7 +104,7 @@ const PaginationPrevious = ({
   ...props
 }: React.ComponentProps<typeof PaginationLink>) => {
   const ref = React.useRef<HTMLAnchorElement>(null);
-  const isRtl = useRtl(ref);
+  const isRtl = useRtl<HTMLAnchorElement>(ref);
 
   return (
     <PaginationLink
@@ -135,7 +135,7 @@ const PaginationNext = ({
   ...props
 }: React.ComponentProps<typeof PaginationLink>) => {
   const ref = React.useRef<HTMLAnchorElement>(null);
-  const isRtl = useRtl(ref);
+  const isRtl = useRtl<HTMLAnchorElement>(ref);
 
   return (
     <PaginationLink

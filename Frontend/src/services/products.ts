@@ -1,11 +1,17 @@
 // services/products.ts
 import { env } from "@/lib/env";
+import {
+  Product,
+  ProductCreate,
+  ProductUpdate,
+  PaginatedResponse
+} from "@/types/products";
 
 const baseURL = env.BASE_URL;
 const errorsPrefix = "api.errors";
 
 export const productService = {
-  async getProducts(page = 0, size = 10) {
+  async getProducts(page = 0, size = 10): Promise<PaginatedResponse<Product>> {
     const response = await fetch(
       `${baseURL}/products?page=${page}&size=${size}`
     );
@@ -15,7 +21,7 @@ export const productService = {
     return response.json();
   },
 
-  async getProduct(id) {
+  async getProduct(id: string): Promise<Product> {
     const response = await fetch(`${baseURL}/products/${id}`);
     if (!response.ok) {
       throw new Error(`${errorsPrefix}.fetchProduct`);
@@ -23,7 +29,7 @@ export const productService = {
     return response.json();
   },
 
-  async createProduct(productData) {
+  async createProduct(productData: ProductCreate): Promise<Product> {
     const response = await fetch(`${baseURL}/products`, {
       method: "POST",
       headers: {
@@ -37,7 +43,10 @@ export const productService = {
     return response.json();
   },
 
-  async updateProduct(id, productData) {
+  async updateProduct(
+    id: string,
+    productData: ProductUpdate
+  ): Promise<Product> {
     const response = await fetch(`${baseURL}/products/${id}`, {
       method: "PUT",
       headers: {
@@ -51,7 +60,7 @@ export const productService = {
     return response.json();
   },
 
-  async deleteProduct(id) {
+  async deleteProduct(id: string): Promise<boolean> {
     const response = await fetch(`${baseURL}/products/${id}`, {
       method: "DELETE"
     });
@@ -61,7 +70,7 @@ export const productService = {
     return true;
   },
 
-  async getStatusOptions() {
+  async getStatusOptions(): Promise<Array<"available" | "unavailable">> {
     const response = await fetch(`${baseURL}/status`);
     if (!response.ok) {
       throw new Error(`${errorsPrefix}.fetchStatus`);

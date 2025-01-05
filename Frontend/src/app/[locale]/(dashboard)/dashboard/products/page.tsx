@@ -22,17 +22,18 @@ import {
 } from "@/components/ui/pagination";
 import { Package, Plus } from "lucide-react";
 import { productService } from "@/services/products";
+import { Product } from "@/types/products";
 import { toast } from "@/hooks/use-toast";
 
 const useProducts = (page = 0, size = 2) => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState({
     totalPages: 0,
     totalElements: 0,
     currentPage: 0
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchProducts = async (pageNum = page) => {
     try {
@@ -44,8 +45,8 @@ const useProducts = (page = 0, size = 2) => {
         totalElements: data.totalElements,
         currentPage: data.number
       });
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      setError("api.errors.fetchProducts");
     } finally {
       setLoading(false);
     }
@@ -57,8 +58,9 @@ const useProducts = (page = 0, size = 2) => {
 
   return { products, pagination, loading, error, fetchProducts };
 };
+type TFunction = ReturnType<typeof useTranslations>;
 
-const EmptyState = ({ t }) => (
+const EmptyState = ({ t }: { t: TFunction }) => (
   <div className="text-center py-12">
     <Package className="mx-auto h-12 w-12 text-gray-400" />
     <h3 className="mt-2 text-lg font-semibold text-gray-900">
@@ -91,7 +93,7 @@ export default function Products() {
   const { products, pagination, loading, error, fetchProducts } =
     useProducts(currentPage);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
       await productService.deleteProduct(id);
       if (products.length === 1 && currentPage > 0) {
@@ -100,9 +102,10 @@ export default function Products() {
         await fetchProducts(currentPage);
       }
     } catch (err) {
+      const error = err as Error;
       toast({
         title: t("error"),
-        description: t(err.message),
+        description: t(error.message),
         variant: "destructive"
       });
     }
@@ -193,12 +196,18 @@ export default function Products() {
                 <Pagination>
                   <PaginationContent>
                     <PaginationItem>
-                      <PaginationPrevious
-                        onClick={() =>
-                          setCurrentPage((prev) => Math.max(0, prev - 1))
-                        }
-                        disabled={currentPage === 0}
-                      />
+                      {currentPage === 0 ? (
+                        <PaginationPrevious
+                          className="pointer-events-none opacity-50"
+                          onClick={() => {}}
+                        />
+                      ) : (
+                        <PaginationPrevious
+                          onClick={() =>
+                            setCurrentPage((prev) => Math.max(0, prev - 1))
+                          }
+                        />
+                      )}
                     </PaginationItem>
                     {[...Array(pagination.totalPages)].map((_, index) => (
                       <PaginationItem key={index}>
@@ -211,14 +220,20 @@ export default function Products() {
                       </PaginationItem>
                     ))}
                     <PaginationItem>
-                      <PaginationNext
-                        onClick={() =>
-                          setCurrentPage((prev) =>
-                            Math.min(pagination.totalPages - 1, prev + 1)
-                          )
-                        }
-                        disabled={currentPage === pagination.totalPages - 1}
-                      />
+                      {currentPage === pagination.totalPages - 1 ? (
+                        <PaginationNext
+                          className="pointer-events-none opacity-50"
+                          onClick={() => {}}
+                        />
+                      ) : (
+                        <PaginationNext
+                          onClick={() =>
+                            setCurrentPage((prev) =>
+                              Math.min(pagination.totalPages - 1, prev + 1)
+                            )
+                          }
+                        />
+                      )}
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>

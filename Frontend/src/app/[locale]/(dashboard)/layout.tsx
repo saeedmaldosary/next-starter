@@ -10,7 +10,8 @@ import { Toaster } from "@/components/ui/toaster";
 import "../../globals.css";
 import { LOCALES } from "@/lib/i18n/config";
 
-const locales = LOCALES;
+type Locale = "en" | "ar";
+const locales: Locale[] = [...LOCALES];
 
 export const metadata: Metadata = {
   title: "Next Starter",
@@ -33,7 +34,7 @@ const cairo = Cairo({
 type Props = {
   children: React.ReactNode;
   params: Promise<{
-    locale: string;
+    locale: Locale;
   }>;
 };
 
