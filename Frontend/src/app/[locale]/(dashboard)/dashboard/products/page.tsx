@@ -54,6 +54,7 @@ const useProducts = (page = 0, size = 2) => {
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, size]);
 
   return { products, pagination, loading, error, fetchProducts };
@@ -67,14 +68,6 @@ const EmptyState = ({ t }: { t: TFunction }) => (
       {t("noProducts")}
     </h3>
     <p className="mt-1 text-sm text-gray-500">{t("noProductsDescription")}</p>
-    <div className="mt-6">
-      <Link href="/products/new">
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          {t("addProduct")}
-        </Button>
-      </Link>
-    </div>
   </div>
 );
 
