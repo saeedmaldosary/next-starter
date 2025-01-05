@@ -52,8 +52,8 @@ const useProducts = (page = 0, size = 2) => {
   };
 
   useEffect(() => {
-    fetchProducts(page);
-  }, [page, size, fetchProducts]); // Added fetchProducts to dependency array
+    fetchProducts();
+  }, [page, size]);
 
   return { products, pagination, loading, error, fetchProducts };
 };

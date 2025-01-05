@@ -19,12 +19,19 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { validationRules } from "@/lib/validations";
-import { useFormValidation, FormData } from "@/lib/hooks/useFormValidation";
-import { FormField } from "@/components/FormField"; // Make sure to adjust this import path
+import { FormField } from "@/components/FormField";
 
 interface CategoryOption {
   value: string;
   label: string;
+}
+
+// Define strict types for form data
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+  category: string;
 }
 
 const categoryOptions: CategoryOption[] = [
@@ -41,6 +48,16 @@ const initialValues: FormData = {
   category: ""
 };
 
+interface UseFormValidation {
+  formData: FormData;
+  handleFieldChange: (name: keyof FormData, value: string) => void;
+  handleSubmit: (
+    callback: (data: FormData) => Promise<void>,
+    e: React.FormEvent
+  ) => Promise<void>;
+  getFieldError: (fieldName: keyof FormData) => string | undefined;
+}
+
 export default function Contact() {
   const t = useTranslations("contact");
 
@@ -48,17 +65,20 @@ export default function Contact() {
     useFormValidation({
       rules: validationRules,
       initialValues
-    });
+    }) as UseFormValidation;
 
   const onSubmit = async (data: FormData) => {
     try {
-      // Here you would typically send the data to your API
       console.log("Form submitted successfully:", data);
-      // You could also show a success message to the user
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Handle error (e.g., show error message to user)
     }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    handleFieldChange(e.target.name as keyof FormData, e.target.value);
   };
 
   return (
@@ -78,7 +98,7 @@ export default function Contact() {
                 <Input
                   name="name"
                   value={formData.name}
-                  onChange={handleFieldChange}
+                  onChange={handleInputChange}
                   placeholder={t("namePlaceholder")}
                 />
               </FormField>
@@ -88,7 +108,7 @@ export default function Contact() {
                   name="email"
                   type="email"
                   value={formData.email}
-                  onChange={handleFieldChange}
+                  onChange={handleInputChange}
                   placeholder={t("emailPlaceholder")}
                 />
               </FormField>
@@ -122,7 +142,7 @@ export default function Contact() {
                 <Textarea
                   name="message"
                   value={formData.message}
-                  onChange={handleFieldChange}
+                  onChange={handleInputChange}
                   placeholder={t("messagePlaceholder")}
                   rows={4}
                 />
