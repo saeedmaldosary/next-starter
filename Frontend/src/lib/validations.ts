@@ -1,47 +1,40 @@
-export const validationRules = {
-  name: {
-    required: true,
-    pattern: /^[a-zA-Z\s]{2,50}$/,
-    messages: {
-      required: "name.required",
-      pattern: "name.pattern"
+import { UnknownObject } from "next-intl"; // for TypeScript type safety
+
+type TranslationFunction = (key: string, args?: UnknownObject) => string;
+
+export const getValidationRules = (t: TranslationFunction) =>
+  ({
+    name: {
+      required: t("name.required"),
+      minLength: {
+        value: 2,
+        message: t("name.pattern")
+      }
+    },
+    email: {
+      required: {
+        value: true,
+        message: t("email.required")
+      },
+      pattern: {
+        value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+        message: t("email.pattern")
+      }
+    },
+    message: {
+      required: {
+        value: true,
+        message: t("message.required")
+      },
+      pattern: {
+        value: /^.{10,500}$/,
+        message: t("message.pattern")
+      }
+    },
+    category: {
+      required: {
+        value: true,
+        message: t("category.required")
+      }
     }
-  },
-  email: {
-    required: true,
-    pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
-    messages: {
-      required: "email.required",
-      pattern: "email.pattern"
-    }
-  },
-  message: {
-    required: true,
-    pattern: /^.{10,500}$/,
-    messages: {
-      required: "message.required",
-      pattern: "message.pattern"
-    }
-  },
-  phone: {
-    pattern: /^\+?[1-9]\d{1,14}$/,
-    messages: {
-      pattern: "phone.pattern"
-    }
-  },
-  password: {
-    required: true,
-    pattern:
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    messages: {
-      required: "password.required",
-      pattern: "password.pattern"
-    }
-  },
-  category: {
-    required: true,
-    messages: {
-      required: "category.required"
-    }
-  }
-} as const;
+  } as const);

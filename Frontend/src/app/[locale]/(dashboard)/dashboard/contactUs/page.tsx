@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,21 +18,28 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { validationRules } from "@/lib/validations";
-import { FormField } from "@/components/FormField";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage
+} from "@/components/ui/form";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { getValidationRules } from "@/lib/validations";
 
 interface CategoryOption {
   value: string;
   label: string;
 }
 
-// Define strict types for form data
-interface FormData {
+type FormData = {
   name: string;
   email: string;
   message: string;
   category: string;
-}
+};
 
 const categoryOptions: CategoryOption[] = [
   { value: "general", label: "General Inquiry" },
@@ -41,44 +48,31 @@ const categoryOptions: CategoryOption[] = [
   { value: "other", label: "Other" }
 ];
 
-const initialValues: FormData = {
-  name: "",
-  email: "",
-  message: "",
-  category: ""
-};
-
-interface UseFormValidation {
-  formData: FormData;
-  handleFieldChange: (name: keyof FormData, value: string) => void;
-  handleSubmit: (
-    callback: (data: FormData) => Promise<void>,
-    e: React.FormEvent
-  ) => Promise<void>;
-  getFieldError: (fieldName: keyof FormData) => string | undefined;
-}
-
 export default function Contact() {
   const t = useTranslations("contact");
+  const tValidation = useTranslations("validation");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { formData, handleFieldChange, handleSubmit, getFieldError } =
-    useFormValidation({
-      rules: validationRules,
-      initialValues
-    }) as UseFormValidation;
+  // Initialize form with react-hook-form
+  const form = useForm<FormData>({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+      category: ""
+    }
+  });
 
   const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
     try {
       console.log("Form submitted successfully:", data);
+      form.reset();
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
     }
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    handleFieldChange(e.target.name as keyof FormData, e.target.value);
   };
 
   return (
@@ -90,68 +84,103 @@ export default function Contact() {
             <CardDescription>{t("formDescription")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <form
-              onSubmit={(e) => handleSubmit(onSubmit, e)}
-              className="space-y-4"
-            >
-              <FormField name="name" getFieldError={getFieldError}>
-                <Input
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder={t("namePlaceholder")}
-                />
-              </FormField>
-
-              <FormField name="email" getFieldError={getFieldError}>
-                <Input
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder={t("emailPlaceholder")}
-                />
-              </FormField>
-
-              <FormField
-                name="category"
-                getFieldError={getFieldError}
-                errorStyleTarget="SelectTrigger"
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
               >
-                <Select
-                  name="category"
-                  onValueChange={(value) =>
-                    handleFieldChange("category", value)
-                  }
-                  value={formData.category}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("categoryPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categoryOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {t(`categories.${option.value}`)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormField>
-
-              <FormField name="message" getFieldError={getFieldError}>
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder={t("messagePlaceholder")}
-                  rows={4}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  rules={getValidationRules(tValidation).name}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder={t("namePlaceholder")} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </FormField>
 
-              <Button type="submit" className="w-full">
-                {t("submitButton")}
-              </Button>
-            </form>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  rules={getValidationRules(tValidation).email}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder={t("emailPlaceholder")}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="category"
+                  rules={getValidationRules(tValidation).category}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={t("categoryPlaceholder")}
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {categoryOptions.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
+                                {t(`categories.${option.value}`)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="message"
+                  rules={getValidationRules(tValidation).message}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          placeholder={t("messagePlaceholder")}
+                          className="min-h-[120px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? t("submitting") : t("submitButton")}
+                </Button>
+              </form>
+            </Form>
           </CardContent>
         </Card>
       </div>
