@@ -21,14 +21,6 @@ export const productService = {
     return response.json();
   },
 
-  async getProduct(id: string): Promise<Product> {
-    const response = await fetch(`${baseURL}/products/${id}`);
-    if (!response.ok) {
-      throw new Error(`${errorsPrefix}.fetchProduct`);
-    }
-    return response.json();
-  },
-
   async createProduct(productData: ProductCreate): Promise<Product> {
     const response = await fetch(`${baseURL}/products`, {
       method: "POST",
@@ -68,13 +60,5 @@ export const productService = {
       throw new Error(`${errorsPrefix}.deleteProduct`);
     }
     return true;
-  },
-
-  async getStatusOptions(): Promise<Array<"available" | "unavailable">> {
-    const response = await fetch(`${baseURL}/status`);
-    if (!response.ok) {
-      throw new Error(`${errorsPrefix}.fetchStatus`);
-    }
-    return response.json();
   }
 };

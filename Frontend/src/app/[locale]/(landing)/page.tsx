@@ -11,7 +11,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/10 to-primary/5">
-      <div className="container px-4 py-16 mx-auto">
+      <div className="max-w-4xl px-4 py-4 mx-auto">
         <nav className="flex justify-between items-center mb-16">
           <div className="text-2xl font-bold">Logo</div>
           <div className="space-x-4">
