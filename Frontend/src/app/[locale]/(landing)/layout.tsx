@@ -3,9 +3,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import "../../globals.css";
-import { LOCALES } from "@/lib/i18n/config";
-
-type Locale = "en" | "ar";
+import { LOCALES, Locale } from "@/lib/i18n/config";
 
 type LayoutProps = {
   children: React.ReactNode;

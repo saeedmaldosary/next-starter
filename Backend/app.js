@@ -5,9 +5,26 @@ const cors = require("cors");
 const app = express();
 const port = 8080;
 
+// Generate array of allowed origins
+const getAllowedOrigins = () => {
+  const origins = [];
+  for (let port = 3000; port <= 3010; port++) {
+    origins.push(`http://localhost:${port}`);
+  }
+  return origins;
+};
+
 // CORS configuration
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: function (origin, callback) {
+    const allowedOrigins = getAllowedOrigins();
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 };

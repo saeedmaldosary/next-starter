@@ -8,9 +8,8 @@ import { setRequestLocale } from "next-intl/server";
 import { Toaster } from "@/components/ui/toaster";
 
 import "../../globals.css";
-import { LOCALES } from "@/lib/i18n/config";
+import { LOCALES, Locale } from "@/lib/i18n/config";
 
-type Locale = "en" | "ar";
 const locales: Locale[] = [...LOCALES];
 
 export const metadata: Metadata = {
