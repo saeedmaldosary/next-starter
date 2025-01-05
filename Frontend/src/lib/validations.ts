@@ -1,4 +1,3 @@
-// Using Record<string, unknown> instead of UnknownObject
 import { RegisterOptions } from "react-hook-form";
 
 type FormData = {
@@ -43,6 +42,14 @@ export const getValidationRules = (
     pattern: {
       value: /^.{10,500}$/,
       message: t("message.pattern")
+    }
+  },
+  price: {
+    required: { value: true, message: t("price.required") },
+    min: { value: 0, message: t("price.min") },
+    pattern: {
+      value: /^\d+(\.\d{1,2})?$/,
+      message: t("price.pattern")
     }
   },
   category: {
