@@ -28,25 +28,7 @@ import {
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { getValidationRules } from "@/lib/validations";
-
-interface CategoryOption {
-  value: string;
-  label: string;
-}
-
-type FormData = {
-  name: string;
-  email: string;
-  message: string;
-  category: string;
-};
-
-const categoryOptions: CategoryOption[] = [
-  { value: "general", label: "General Inquiry" },
-  { value: "support", label: "Technical Support" },
-  { value: "feedback", label: "Feedback" },
-  { value: "other", label: "Other" }
-];
+import { FormData, categoryOptions } from "@/types/contactUs";
 
 export default function Contact() {
   const t = useTranslations("contact");
