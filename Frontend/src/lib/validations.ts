@@ -1,22 +1,11 @@
-import { RegisterOptions } from "react-hook-form";
-
-type FormData = {
-  name: string;
-  email: string;
-  message: string;
-  category: string;
-};
-
-type ValidationRules = {
-  name: RegisterOptions<FormData, "name">;
-  email: RegisterOptions<FormData, "email">;
-  category: RegisterOptions<FormData, "category">;
-  message: RegisterOptions<FormData, "message">;
-};
-
-export const getValidationRules = (
-  t: (key: string) => string
-): ValidationRules => ({
+export const getValidationRules = (t: (key: string) => string) => ({
+  title: {
+    required: t("name.required"),
+    minLength: {
+      value: 2,
+      message: t("name.pattern")
+    }
+  },
   name: {
     required: t("name.required"),
     minLength: {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -26,13 +25,16 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Plus, Pencil } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { productService } from "@/services/products";
-import { Product, ProductCreate } from "@/types/products";
+import { Product, ProductCreate, ProductStatus } from "@/types/products";
 import { toast } from "@/hooks/use-toast";
 import { getValidationRules } from "@/lib/validations";
 
-type FormData = ProductCreate;
+type FormData = Omit<ProductCreate, "status"> & {
+  status: string;
+};
 
 interface ProductDialogProps {
   mode: "create" | "edit";
@@ -52,13 +54,15 @@ export default function ProductDialog({
   const getTranslation = (key: string): string => tValidation(key);
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const unavailable = ProductStatus.UNAVAILABLE;
+  const available = ProductStatus.AVAILABLE;
 
   const form = useForm<FormData>({
     defaultValues: {
       title: "",
       description: "",
-      price: "",
-      status: ""
+      price: 0,
+      status: unavailable.toString()
     }
   });
 
@@ -76,22 +80,20 @@ export default function ProductDialog({
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
+      const submissionData = {
+        ...data,
+        status: Number(data.status) as ProductStatus,
+        price: Number(data.price)
+      };
+
       if (mode === "create") {
-        const submitData = {
-          ...data,
-          status: parseInt(data.status, 10) as 0 | 1
-        };
-        await productService.createProduct(submitData);
+        await productService.createProduct(submissionData);
         toast({
           title: t("createSuccess.title"),
           description: t("createSuccess.description")
         });
       } else if (mode === "edit" && product) {
-        const updateData = {
-          ...data,
-          status: parseInt(data.status, 10) as 0 | 1
-        };
-        await productService.updateProduct(product.id, updateData);
+        await productService.updateProduct(product.id, submissionData);
         toast({
           title: t("editSuccess.title"),
           description: t("editSuccess.description")
@@ -203,16 +205,17 @@ export default function ProductDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value.toString()}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
                         <SelectValue placeholder={t("statusPlaceholder")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="0">{t("status.0")}</SelectItem>
-                        <SelectItem value="1">{t("status.1")}</SelectItem>
+                        <SelectItem value={unavailable.toString()}>
+                          {t(`status.${unavailable.toString()}`)}
+                        </SelectItem>
+                        <SelectItem value={available.toString()}>
+                          {t(`status.${available.toString()}`)}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
