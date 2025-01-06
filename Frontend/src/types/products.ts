@@ -1,4 +1,3 @@
-// types/products.ts
 export enum ProductStatus {
   UNAVAILABLE = 0,
   AVAILABLE = 1
@@ -19,11 +18,11 @@ export interface ProductCreate {
   status: ProductStatus;
 }
 
-export interface ProductUpdate {
-  title?: string;
-  description?: string;
-  price?: number;
-  status?: ProductStatus;
+export interface ProductFormData {
+  title: string;
+  description: string;
+  price: number;
+  status: string;
 }
 
 export interface PaginatedResponse<T> {
@@ -34,15 +33,15 @@ export interface PaginatedResponse<T> {
   size: number;
 }
 
-export const defaultValues = {
+export const defaultValues: ProductFormData = {
   title: "",
   description: "",
   price: 0,
-  status: unavailable.toString()
+  status: ProductStatus.UNAVAILABLE.toString()
 };
 
-export const getProductFormDefaults = (product?: Product): ProductCreate => {
-  if (!product) return DEFAULT_PRODUCT_VALUES;
+export const getProductFormDefaults = (product?: Product): ProductFormData => {
+  if (!product) return defaultValues;
 
   return {
     title: product.title,

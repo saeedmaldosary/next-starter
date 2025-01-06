@@ -30,17 +30,13 @@ import { useTranslations } from "next-intl";
 import { productService } from "@/services/products";
 import {
   Product,
-  ProductCreate,
+  ProductFormData,
   ProductStatus,
   getProductFormDefaults,
   defaultValues
 } from "@/types/products";
 import { toast } from "@/hooks/use-toast";
 import { useValidationRules } from "@/lib/validations";
-
-type FormData = Omit<ProductCreate, "status"> & {
-  status: string;
-};
 
 interface ProductDialogProps {
   mode: "create" | "edit";
@@ -56,13 +52,12 @@ export default function ProductDialog({
   trigger
 }: ProductDialogProps) {
   const t = useTranslations("products");
-
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const unavailable = ProductStatus.UNAVAILABLE;
   const available = ProductStatus.AVAILABLE;
 
-  const form = useForm<FormData>({
+  const form = useForm<ProductFormData>({
     defaultValues: defaultValues
   });
 
@@ -72,23 +67,17 @@ export default function ProductDialog({
     }
   }, [product, mode, form]);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ProductFormData) => {
     setIsSubmitting(true);
     try {
-      const submissionData = {
-        ...data,
-        status: Number(data.status) as ProductStatus,
-        price: Number(data.price)
-      };
-
       if (mode === "create") {
-        await productService.createProduct(submissionData);
+        await productService.createProduct(data);
         toast({
           title: t("createSuccess.title"),
           description: t("createSuccess.description")
         });
       } else if (mode === "edit" && product) {
-        await productService.updateProduct(product.id, submissionData);
+        await productService.updateProduct(product.id, data);
         toast({
           title: t("editSuccess.title"),
           description: t("editSuccess.description")

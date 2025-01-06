@@ -1,14 +1,21 @@
-// services/products.ts
 import { env } from "@/lib/env";
 import {
   Product,
-  ProductCreate,
-  ProductUpdate,
-  PaginatedResponse
+  ProductFormData,
+  PaginatedResponse,
+  ProductStatus
 } from "@/types/products";
 
 const baseURL = env.BASE_URL;
 const errorsPrefix = "api.errors";
+
+function transformProductFormData(data: ProductFormData) {
+  return {
+    ...data,
+    status: Number(data.status) as ProductStatus,
+    price: Number(data.price)
+  };
+}
 
 export const productService = {
   async getProducts(page = 0, size = 10): Promise<PaginatedResponse<Product>> {
@@ -21,13 +28,14 @@ export const productService = {
     return response.json();
   },
 
-  async createProduct(productData: ProductCreate): Promise<Product> {
+  async createProduct(productData: ProductFormData): Promise<Product> {
+    const submissionData = transformProductFormData(productData);
     const response = await fetch(`${baseURL}/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(productData)
+      body: JSON.stringify(submissionData)
     });
     if (!response.ok) {
       throw new Error(`${errorsPrefix}.createProduct`);
@@ -37,14 +45,15 @@ export const productService = {
 
   async updateProduct(
     id: string,
-    productData: ProductUpdate
+    productData: ProductFormData
   ): Promise<Product> {
+    const submissionData = transformProductFormData(productData);
     const response = await fetch(`${baseURL}/products/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(productData)
+      body: JSON.stringify(submissionData)
     });
     if (!response.ok) {
       throw new Error(`${errorsPrefix}.updateProduct`);
