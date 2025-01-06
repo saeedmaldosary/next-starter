@@ -27,17 +27,14 @@ import {
 } from "@/components/ui/form";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { getValidationRules } from "@/lib/validations";
+import { useValidationRules } from "@/lib/validations";
 import { FormData, categoryOptions } from "@/types/contactUs";
 
 export default function Contact() {
   const t = useTranslations("contact");
-  const tValidation = useTranslations("validation");
-  const getTranslation = (key: string): string => tValidation(key);
-
+  const validationRules = useValidationRules();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Initialize form with react-hook-form
   const form = useForm<FormData>({
     defaultValues: {
       name: "",
@@ -76,7 +73,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="name"
-                  rules={getValidationRules(getTranslation).name}
+                  rules={validationRules.name}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -90,7 +87,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="email"
-                  rules={getValidationRules(getTranslation).email}
+                  rules={validationRules.email}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -108,7 +105,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="category"
-                  rules={getValidationRules(getTranslation).category}
+                  rules={validationRules.category}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -141,7 +138,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="message"
-                  rules={getValidationRules(getTranslation).message}
+                  rules={validationRules.message}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>

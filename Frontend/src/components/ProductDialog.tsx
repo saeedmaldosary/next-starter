@@ -30,7 +30,7 @@ import { useTranslations } from "next-intl";
 import { productService } from "@/services/products";
 import { Product, ProductCreate, ProductStatus } from "@/types/products";
 import { toast } from "@/hooks/use-toast";
-import { getValidationRules } from "@/lib/validations";
+import { useValidationRules } from "@/lib/validations";
 
 type FormData = Omit<ProductCreate, "status"> & {
   status: string;
@@ -50,8 +50,8 @@ export default function ProductDialog({
   trigger
 }: ProductDialogProps) {
   const t = useTranslations("products");
-  const tValidation = useTranslations("validation");
-  const getTranslation = (key: string): string => tValidation(key);
+  const validationRules = useValidationRules();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const unavailable = ProductStatus.UNAVAILABLE;
@@ -147,7 +147,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="title"
-              rules={getValidationRules(getTranslation).name}
+              rules={validationRules.name}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -161,7 +161,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="description"
-              rules={getValidationRules(getTranslation).message}
+              rules={validationRules.message}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -179,7 +179,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="price"
-              rules={getValidationRules(getTranslation).price}
+              rules={validationRules.price}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -201,7 +201,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="status"
-              rules={getValidationRules(getTranslation).category}
+              rules={validationRules.category}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
