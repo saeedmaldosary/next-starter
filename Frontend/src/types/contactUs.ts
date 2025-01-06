@@ -10,6 +10,13 @@ export type FormData = {
   category: string;
 };
 
+export const defaultValues = {
+  name: "",
+  email: "",
+  message: "",
+  category: ""
+};
+
 export const categoryOptions: CategoryOption[] = [
   { value: "general", label: "General Inquiry" },
   { value: "support", label: "Technical Support" },

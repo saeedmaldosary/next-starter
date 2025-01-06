@@ -28,7 +28,13 @@ import { Plus, Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { productService } from "@/services/products";
-import { Product, ProductCreate, ProductStatus } from "@/types/products";
+import {
+  Product,
+  ProductCreate,
+  ProductStatus,
+  getProductFormDefaults,
+  defaultValues
+} from "@/types/products";
 import { toast } from "@/hooks/use-toast";
 import { useValidationRules } from "@/lib/validations";
 
@@ -50,7 +56,6 @@ export default function ProductDialog({
   trigger
 }: ProductDialogProps) {
   const t = useTranslations("products");
-  const validationRules = useValidationRules();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,22 +63,12 @@ export default function ProductDialog({
   const available = ProductStatus.AVAILABLE;
 
   const form = useForm<FormData>({
-    defaultValues: {
-      title: "",
-      description: "",
-      price: 0,
-      status: unavailable.toString()
-    }
+    defaultValues: defaultValues
   });
 
   useEffect(() => {
     if (mode === "edit" && product) {
-      form.reset({
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        status: product.status.toString()
-      });
+      form.reset(getProductFormDefaults(product));
     }
   }, [product, mode, form]);
 
@@ -147,7 +142,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="title"
-              rules={validationRules.name}
+              rules={useValidationRules().name}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -161,7 +156,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="description"
-              rules={validationRules.message}
+              rules={useValidationRules().message}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -179,7 +174,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="price"
-              rules={validationRules.price}
+              rules={useValidationRules().price}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -201,7 +196,7 @@ export default function ProductDialog({
             <FormField
               control={form.control}
               name="status"
-              rules={validationRules.category}
+              rules={useValidationRules().category}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

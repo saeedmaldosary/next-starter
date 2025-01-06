@@ -28,20 +28,14 @@ import {
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useValidationRules } from "@/lib/validations";
-import { FormData, categoryOptions } from "@/types/contactUs";
+import { defaultValues, FormData, categoryOptions } from "@/types/contactUs";
 
 export default function Contact() {
   const t = useTranslations("contact");
-  const validationRules = useValidationRules();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormData>({
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-      category: ""
-    }
+    defaultValues: defaultValues
   });
 
   const onSubmit = async (data: FormData) => {
@@ -73,7 +67,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="name"
-                  rules={validationRules.name}
+                  rules={useValidationRules().name}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -87,7 +81,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="email"
-                  rules={validationRules.email}
+                  rules={useValidationRules().email}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -105,7 +99,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="category"
-                  rules={validationRules.category}
+                  rules={useValidationRules().category}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -138,7 +132,7 @@ export default function Contact() {
                 <FormField
                   control={form.control}
                   name="message"
-                  rules={validationRules.message}
+                  rules={useValidationRules().message}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
