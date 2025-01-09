@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "env-cmd -e local next dev",
     "dev:preprod": "env-cmd -e preprod next dev",
+    "dev:azure": "env-cmd -e azure next dev",
     "build": "env-cmd -e local next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/core": "^0.34.2",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -22,6 +24,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",
     "next": "15.1.3",
+    "next-auth": "^4.24.11",
     "next-intl": "^3.9.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

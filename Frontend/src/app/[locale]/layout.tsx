@@ -4,12 +4,14 @@ import Favicon from "/public/favicon.ico";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { Providers } from "@/app/providers";
 import "../globals.css";
 import { LOCALES, Locale } from "@/lib/i18n/config";
 
 export const metadata: Metadata = {
   title: "Next Starter",
-  description: "Next.js starter template with TypeScript and shadcn/ui",
+  description:
+    "Next.js starter template with TypeScript, shadcn/ui and authentication",
   icons: [{ rel: "icon", url: Favicon.src }]
 };
 
@@ -56,9 +58,11 @@ export default async function RootLayout({
           locale === "ar" ? "font-cairo text-right" : "font-epilogue text-left"
         }`}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <Providers>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </Providers>
       </body>
     </html>
   );
