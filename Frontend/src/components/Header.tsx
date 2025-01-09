@@ -1,5 +1,5 @@
 "use client";
-import { Link, usePathname } from "@/lib/navigation";
+import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
@@ -9,13 +9,20 @@ import {
 import logo from "@/images/logo.png";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
+import { signOut } from "next-auth/react";
 
 export function Header() {
   const t = useTranslations("header");
   const headerKeys = ["home", "products", "contactUs"];
   const currentPath = usePathname();
   const locale = useLocale();
+  const router = useRouter();
   const oppositeLocale = locale === "en" ? "ar" : "en";
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+  };
 
   return (
     <header className="border-b">
@@ -61,7 +68,7 @@ export function Header() {
                 <GlobeAltIcon className="h-4 w-4" />
               </Button>
             </Link>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={handleLogout}>
               <ArrowRightOnRectangleIcon className="h-4 w-4" />
             </Button>
           </div>

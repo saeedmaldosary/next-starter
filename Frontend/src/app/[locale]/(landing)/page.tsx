@@ -1,13 +1,32 @@
 "use client";
 
+import { useSession, signIn, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
-import { Link } from "@/lib/navigation";
-// import { env } from "@/app/env";
+// import { useRouter } from "@/lib/navigation";
+// import { useEffect } from "react";
+import { env } from "@/lib/env";
 
 export default function LandingPage() {
   const t = useTranslations("landing");
+  const { data: session, status } = useSession();
+  // const router = useRouter();
+
+  // Redirect to dashboard if already authenticated
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [session, router]);
+
+  const handleAuth = () => {
+    if (session) {
+      signOut();
+    } else {
+      signIn(env.PLATFORM, { callbackUrl: "/dashboard" });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/10 to-primary/5">
@@ -15,12 +34,26 @@ export default function LandingPage() {
         <nav className="flex justify-between items-center mb-16">
           <div className="text-2xl font-bold">Logo</div>
           <div className="space-x-4">
-            <Link href="/dashboard">
-              <Button variant="ghost">{t("login")}</Button>
-            </Link>
-            <Link href="/signup">
-              <Button>{t("signup")}</Button>
-            </Link>
+            {status === "loading" ? (
+              <Button variant="ghost" disabled>
+                Loading...
+              </Button>
+            ) : session ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-muted-foreground">
+                  {session.user?.email}
+                </span>
+                <Button variant="ghost" onClick={handleAuth}>
+                  {t("logout")}
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button variant="ghost" onClick={handleAuth}>
+                  {t("login")}
+                </Button>
+              </>
+            )}
           </div>
         </nav>
 
