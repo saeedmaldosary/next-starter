@@ -4,6 +4,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
+import { Link } from "@/lib/navigation";
 // import { useRouter } from "@/lib/navigation";
 // import { useEffect } from "react";
 import { env } from "@/lib/env";
@@ -46,6 +47,9 @@ export default function LandingPage() {
                 <Button variant="ghost" onClick={handleAuth}>
                   {t("logout")}
                 </Button>
+                <Link href="/dashboard">
+                  <Button>{t("dashboard")}</Button>
+                </Link>
               </div>
             ) : (
               <>
