@@ -16,7 +16,7 @@ export default function AuthButton() {
         <button onClick={() => signOut()}>
           Sign out ({session.user?.email})
         </button>
-        <p className="break-all text-sm">{`Bearer ${session?.accessToken}`}</p>
+        {/* <p className="break-all text-sm">{`Bearer ${session?.accessToken}`}</p> */}
       </div>
     );
   }

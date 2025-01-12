@@ -45,8 +45,9 @@ const useProducts = (page = 0, size = 2) => {
         totalElements: data.totalElements,
         currentPage: data.number
       });
-    } catch {
-      setError("api.errors.fetchProducts");
+    } catch (e) {
+      const error = e as Error;
+      setError(error.message);
     } finally {
       setLoading(false);
     }

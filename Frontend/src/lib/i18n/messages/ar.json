@@ -39,10 +39,6 @@
     }
   },
   "products": {
-    "createDialog": {
-      "title": "إنشاء منتج جديد",
-      "description": "املأ التفاصيل أدناه لإنشاء منتج جديد"
-    },
     "cancel": "الغاء",
     "create": "انشاء منتج ",
     "titlePlaceholder": "أدخل عنوان المنتج",

@@ -86,10 +86,11 @@ export default function ProductDialog({
       form.reset();
       setIsOpen(false);
       onSuccess();
-    } catch {
+    } catch (e) {
+      const error = e as Error;
       toast({
         title: t("error"),
-        description: t(mode === "create" ? "createError" : "editError"),
+        description: t(error.message),
         variant: "destructive"
       });
     } finally {
